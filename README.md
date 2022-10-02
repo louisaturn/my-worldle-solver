@@ -5,9 +5,9 @@ A simple robot that solves the Worldle game (worldle.teuteuf.fr)
 
 [Worldle](https://worldle.teuteuf.fr/)
 
-O worldle é um jogo baseado no sucesso Wordle. Ele consiste em adivinhar o país do dia através de sua imagem no mapa e dos feedbacks do jogo relacionados à proximidade dele (em porcentagem, kilômetros e indicação de direção).
+O worldle é um jogo baseado no sucesso Wordle. Ele consiste em adivinhar o país do dia através de sua imagem no mapa e dos feedbacks do jogo relacionados à proximidade dele (em porcentagem, kilômetros e indicação de direção). 
 
-GitHub: https://github.com/teuteuf/worldle
+[GitHub](https://github.com/teuteuf/worldle)
 
 # O Resolvedor
 
