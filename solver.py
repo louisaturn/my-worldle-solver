@@ -7,6 +7,8 @@ from playwright.sync_api import sync_playwright
 CONST_DICT = {
     'url': 'https://worldle.teuteuf.fr/',
     'image': 'local.svg',
+    'button_share': '//*[@id="root"]/div[2]/div[2]/div/div[3]/button',
+    'button_answer': '//*[@id="root"]/div[2]/div[2]/div/div[3]/form/div/button',
     'locator': '//html/body/div[1]/div[2]/div/div/div[1]/img',
     'attribute': 'src',
     'selector': '/*[@id="root"]/div[2]/div/div/div[3]/form/div/div/input',

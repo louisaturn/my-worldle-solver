@@ -1,13 +1,19 @@
 # from local_guesser.guesser import LocalGuesser
 
+from pathlib import Path
+import pyperclip
+
 import requests
 import shutil
+
 
 
 class Robot:
     def __init__(self, info, save_path, pw):
         self.url = info["url"]
         self.image = info["image"]
+        self.button_share = info["button_share"]
+        self.button_answer = info["button_answer"]
         self.locator = info["locator"]
         self.attribute = info["attribute"]
         self.screenshot = info["screenshot"]
@@ -40,26 +46,38 @@ class Input(Robot):
         # else:
         #     print('Sorry, I could not get the image of the country')
 
-# class Output(Robot):
-#     def __init__(self, info, save_path):
-#         super().__init__(self)
+class Output(Robot):
+    def __init__(self, info, save_path, pw):
+        super().__init__(info, save_path, pw)
 
-#     #find and select the local name
-#      def answer(self):
-#         self.choose_option(self)
-#         self.page.wait_for_load_state("networkidle")
+    #find and select the local name
+    def answer(self):
+        self.choose_option(self)
+        self.page.wait_for_load_state("networkidle")
+        self.page.locator(self.button_answer).click()
 
-#         # screenshot and txt file with "SHARE" results
-#         self.page.screenshot(path="{path}/{self.screenshot}")
-#         # TODO: click SHARE, copy and paste in a txt file
-#         # page.wait_for_load_state("networkidle")
+        # success screenshot!
+        self.page.wait_for_load_state("networkidle")
+        self.page.screenshot(path=f"{self.path}/{self.screenshot}")
 
-#         self.browser.close()
-
-#      def choose_option(self):
-#         selector = self.page.locator(self.selector)
-
-#         option = LocalGuesser().final_answer()
+        # # and txt file with "SHARE" button content:
+        # pyperclip.copy(self.page.locator(self.button_share))
         
-#         # page.wait_for_load_state("networkidle")
-#         self.page.select_option(selector, option)
+        # file_path = Path(f"{self.save_path}/{self.copied_result}")
+        # file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # with file_path.open("w") as f:
+        #     f.write(pyperclip.paste())
+        #     f.close()
+
+        self.browser.close()
+
+    def choose_option(self):
+        pass
+        # selector = self.page.locator(self.selector)
+        
+
+        # option = LocalGuesser().final_answer()
+        
+        # # page.wait_for_load_state("networkidle")
+        # self.page.select_option(selector, option)
