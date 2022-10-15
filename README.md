@@ -1,7 +1,7 @@
 # my-worldle-solver
 A simple robot that solves the Worldle game (worldle.teuteuf.fr)
 
-![image](https://user-images.githubusercontent.com/48096245/196002915-8c7ef182-cea5-4557-83b1-f1bc9951fa94.png)
+![Screenshot from 2022-10-15 15-43-03](https://user-images.githubusercontent.com/48096245/196002988-91a085a2-023e-4984-a87e-c6ac2ed6816e.png)
 
 
 # O Jogo
