@@ -44,9 +44,9 @@ class Input(Robot):
         self.new_browser()
         self.page.wait_for_load_state("networkidle")
 
-        element = self.page.locator(self.locator)
+        element = self.page.get_by_alt_text(self.locator)
         return self.url + element.get_attribute('src')
-    
+
     # get the code, the two letters that represents the name of the country/local.
     # this method is only necessary when we are using the "Lazy Guesser".
     def code(self):
@@ -82,12 +82,12 @@ class Output(Robot):
         self.new_browser()
         self.page.wait_for_load_state("networkidle")
         
-        self.page.locator(self.selector).fill(f'{country_name}')
+        self.page.get_by_placeholder(self.selector).fill(f'{country_name}')
         # a timer, because the selection is really fast
         time.sleep(3)
-        self.page.locator(self.button_answer).click()
+        self.page.get_by_text(self.button_answer, exact=True).click()
         # waiting for the full bar of success
-        time.sleep(2)
+        time.sleep(5)
         
         self.page.screenshot(path=self.screenshot, full_page=True)
         self.close_browser()
