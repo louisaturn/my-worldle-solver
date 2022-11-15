@@ -18,7 +18,7 @@ class Lazy_Guesser(LocalGuesser):
 The "Fancy Guesser" is inactive, because I'm still learning how to
 compare two SVGs. I tried base64 but the image that I got by request
 and the SVGs of the directory "countries" do not match perfectly
-TODO: explicar o problema
+TODO: explain the problem better.
 
 """        
 # from pathlib import Path

@@ -1,6 +1,8 @@
 import sys
 import time
 
+from pathlib import Path
+
 sys.path.append(".")
 from local_guesser.guesser import Lazy_Guesser
 
@@ -20,8 +22,8 @@ class Robot:
         self.copied_result = info["copied_result"]
 
     # new browser instance
-    def new_browser(self):
-        self.browser = self.pw.firefox.launch(headless=False)
+    def new_browser(self, headless):
+        self.browser = self.pw.firefox.launch(headless=headless)
     
         # open the game on browser:
         self.page = self.browser.new_page()
@@ -32,7 +34,7 @@ class Robot:
         self.browser.close()
 
     def get_link_image(self):
-        self.new_browser()
+        self.new_browser(headless=True)
 
         image = self.page.get_by_alt_text(self.locator)
         link_image = self.url + image.get_attribute('src')
@@ -50,16 +52,16 @@ class GoofyBot(Robot):
         code_country = self.get_link_image().split("/")[-2]
         country_name = Lazy_Guesser(code_country).answer()
 
-        self.new_browser()
+        self.new_browser(headless=False)
 
         self.page.get_by_placeholder(self.selector).fill(f'{country_name}')
         # a timer, because the selection is really fast
         time.sleep(3)
         self.page.get_by_text(self.button_answer, exact=True).click()
         # waiting for the full bar of success and the colored thingies <3
-        time.sleep(5)
+        time.sleep(10)
         
-        self.page.screenshot(path=self.screenshot, full_page=True)
+        self.page.screenshot(path=Path(f"{self.save_path}/answer").joinpath(self.screenshot), full_page=True)
         self.close_browser()
 
 """
