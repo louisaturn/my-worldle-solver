@@ -11,11 +11,7 @@ on the link of the country image. Yes, I'm cheating, shame on me ;D.
 
 """
 class Lazy_Guesser(LocalGuesser):
-    def __init__(self, code_country):
-        super().__init__(code_country)
-
     def answer(self):
-        print (self.names[self.country.upper()].upper())
         return self.names[self.country.upper()].upper()
 
 """

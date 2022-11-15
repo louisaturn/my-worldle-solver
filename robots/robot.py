@@ -1,10 +1,8 @@
-from pathlib import Path
+import sys
 import time
 
-# import pyperclip
-
-import requests
-import shutil
+sys.path.append(".")
+from local_guesser.guesser import Lazy_Guesser
 
 class Robot:
     def __init__(self, info, save_path, pw):
@@ -28,36 +26,53 @@ class Robot:
         # open the game on browser:
         self.page = self.browser.new_page()
         self.page.goto(self.url)
+        self.page.wait_for_load_state("networkidle")
     
     def close_browser(self):
         self.browser.close()
 
-# This class opens a browser and get the country image. 
-class Input(Robot):
-    def __init__(self, info, save_path, pw):
-        super().__init__(info, save_path, pw)
-
-    def new_browser(self):
-        super().new_browser()
-    
     def get_link_image(self):
         self.new_browser()
-        self.page.wait_for_load_state("networkidle")
 
-        element = self.page.get_by_alt_text(self.locator)
-        return self.url + element.get_attribute('src')
+        image = self.page.get_by_alt_text(self.locator)
+        link_image = self.url + image.get_attribute('src')
+        
+        self.close_browser()
+        return link_image
+
+# This class opens a browser and get the country image. 
+class GoofyBot(Robot):
 
     # get the code, the two letters that represents the name of the country/local.
     # this method is only necessary when we are using the "Lazy Guesser".
-    def code(self):
-        return self.get_link_image().split("/")[-2]
 
-    """
+    def answer(self):
+        code_country = self.get_link_image().split("/")[-2]
+        country_name = Lazy_Guesser(code_country).answer()
+
+        self.new_browser()
+
+        self.page.get_by_placeholder(self.selector).fill(f'{country_name}')
+        # a timer, because the selection is really fast
+        time.sleep(3)
+        self.page.get_by_text(self.button_answer, exact=True).click()
+        # waiting for the full bar of success and the colored thingies <3
+        time.sleep(5)
+        
+        self.page.screenshot(path=self.screenshot, full_page=True)
+        self.close_browser()
+
+"""
     This part is only necessary when we need the country image to compare
     with the list of SVG that represents the countries. This is "the fancy
     mode" to solve the game. It's not working yet :/.
 
-    """
+"""
+# import pyperclip
+
+# import requests
+# import shutil
+
 #     # save the country svg on the date directory
 #     def save_image(self):
 #         file_path = Path(f"{self.save_path}/{self.image}")
@@ -70,24 +85,3 @@ class Input(Robot):
 #                 return "success"
 #         else:
 #             print('Sorry, I could not get the image of the country')
-
-class Output(Robot):
-    def __init__(self, info, save_path, pw):
-        super().__init__(info, save_path, pw)
-    
-    def new_browser(self):
-        super().new_browser()
-
-    def answer(self, country_name):
-        self.new_browser()
-        self.page.wait_for_load_state("networkidle")
-        
-        self.page.get_by_placeholder(self.selector).fill(f'{country_name}')
-        # a timer, because the selection is really fast
-        time.sleep(3)
-        self.page.get_by_text(self.button_answer, exact=True).click()
-        # waiting for the full bar of success
-        time.sleep(5)
-        
-        self.page.screenshot(path=self.screenshot, full_page=True)
-        self.close_browser()

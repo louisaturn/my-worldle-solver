@@ -1,14 +1,13 @@
-from robots.robot import Input, Output
-from local_guesser.guesser import Lazy_Guesser
+from robots.robot import GoofyBot
 
 from datetime import date
 from playwright.sync_api import sync_playwright
 
 def guesser_bot(const_dict, save_path):
     with sync_playwright() as pw:
-        code = Input(const_dict, save_path, pw).code()
-        country_name = Lazy_Guesser(code).answer()
-        Output(const_dict, save_path, pw).answer(country_name)
+        #code = GoofyBot(const_dict, save_path, pw).code()
+        #country_name = Lazy_Guesser(code).answer()
+        GoofyBot(const_dict, save_path, pw).answer()
 
 def dir_name():
     # directory name: today's date
