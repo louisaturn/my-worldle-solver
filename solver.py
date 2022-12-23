@@ -18,13 +18,13 @@ def dir_name():
 CONST_DICT = {
     'url'          : 'https://worldle.teuteuf.fr/',
     'image'        : 'local.svg',
-    'locator'      : 'country to guess',
-    'selector'     : 'Country, territory...',
+    'locator'      : 'img[alt=\"country to guess\"]',
+    'selector'     : '[placeholder=\"Country\\, territory\\.\\.\\.\"]',
     'attribute'    : 'src',
     'screenshot'   : 'screenshot.png',
     'button_share' : '//*[@id="root"]/div[2]/div[2]/div/div[3]/button',
     'copied_result': 'result.txt',
-    'button_answer': 'Guess'
+    'button_answer': 'button:has-text(\"Guess\")'
 }
 
 

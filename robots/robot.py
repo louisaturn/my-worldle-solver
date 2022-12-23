@@ -23,7 +23,7 @@ class Robot:
 
     # new browser instance
     def new_browser(self, headless):
-        self.browser = self.pw.firefox.launch(headless=headless)
+        self.browser = self.pw.webkit.launch(headless=headless)
     
         # open the game on browser:
         self.page = self.browser.new_page()
@@ -36,7 +36,7 @@ class Robot:
     def get_link_image(self):
         self.new_browser(headless=True)
 
-        image = self.page.get_by_alt_text(self.locator)
+        image = self.page.locator(self.locator)
         link_image = self.url + image.get_attribute('src')
         
         self.close_browser()
@@ -54,10 +54,10 @@ class GoofyBot(Robot):
 
         self.new_browser(headless=False)
 
-        self.page.get_by_placeholder(self.selector).fill(f'{country_name}')
+        self.page.locator(self.selector).fill(f'{country_name}')
         # a timer, because the selection is really fast
         time.sleep(3)
-        self.page.get_by_text(self.button_answer, exact=True).click()
+        self.page.locator(self.button_answer).click()
         # waiting for the full bar of success and the colored thingies <3
         time.sleep(10)
         
